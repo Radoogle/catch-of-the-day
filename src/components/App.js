@@ -14,10 +14,19 @@ class App extends React.Component {
     
 componentDidMount() {
     const { params } = this.props.match;
+    // first reinstate our localStorage
+    const localStorageRef = localStorage.getItem(params.storeId);
+    if (localStorageRef) {
+        this.setState({ order: JSON.parse(localStorageRef) });
+    }
     this.ref = base.syncState(`${params.storeId}/fishes`, {
         context: this,
         state: 'fishes'
     });
+}
+
+componentDidUpdate() {
+    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
 }
 
 componentWillUnmount() {
@@ -44,7 +53,7 @@ componentWillUnmount() {
         // 1. take a copy of state
         const order = { ...this.state.order };
         // 2. either add to the order or update the number in the order
-        order[key] = order.[key] + 1 || 1;
+        order[key] = order[key] + 1 || 1;
         // 3. call setstate to update our state object
         this.setState({ order });
     }
