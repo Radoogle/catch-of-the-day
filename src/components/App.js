@@ -54,6 +54,16 @@ componentWillUnmount() {
         this.setState({ fishes });
     }
 
+    deleteFish = (key) => {
+        // 1. take a copy of state
+        const fishes = { ...this.state.fishes };
+        // 2. update the state
+        // delete fishes.fish1 merge, dar pentru firebase trebuie setat to null
+        fishes[key] = null;
+        // 3. update state
+        this.setState({ fishes });
+    }
+
     loadSampleFishes = () => {
         this.setState({ fishes: sampleFishes });
     }
@@ -64,6 +74,16 @@ componentWillUnmount() {
         // 2. either add to the order or update the number in the order
         order[key] = order[key] + 1 || 1;
         // 3. call setstate to update our state object
+        this.setState({ order });
+    }
+    
+    removeFromOrder = (key) => {
+        // 1. take a copy of state
+        const order = { ...this.state.order };
+        // 2. remove that item from order
+        // order[key] = null; is not mirroring to firebase so we can use delete
+        delete order[key];
+        // 3. update the state
         this.setState({ order });
     }
 
@@ -85,11 +105,13 @@ componentWillUnmount() {
                 </div>
                 <Order 
                     fishes={this.state.fishes} 
-                    order={this.state.order} 
+                    order={this.state.order}
+                    removeFromOrder={this.removeFromOrder}
                 />
                 <Inventory 
                     addFish={this.addFish} 
                     updateFish={this.updateFish}
+                    deleteFish={this.deleteFish}
                     loadSampleFishes={this.loadSampleFishes}
                     fishes={this.state.fishes}
                 />
