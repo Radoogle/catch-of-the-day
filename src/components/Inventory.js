@@ -26,7 +26,7 @@ class Inventory extends React.Component {
             if(user) {
                 this.authHandler({ user });
             }
-        })
+        });
     }
 
     authHandler = async (authData) => {
