@@ -9,11 +9,11 @@ import base, { firebaseApp } from '../base';
 class Inventory extends React.Component {
     
     static propTypes ={
-        fishes: PropTypes.object,
-        updateFish: PropTypes.func, 
-        deleteFish: PropTypes.func,
-        addFish: PropTypes.func, 
-        loadSampleFishes: PropTypes.func  
+        fishes: PropTypes.object.isRequired,
+        updateFish: PropTypes.func.isRequired, 
+        deleteFish: PropTypes.func.isRequired,
+        addFish: PropTypes.func.isRequired, 
+        loadSampleFishes: PropTypes.func.isRequired  
     };
 
     state = {
@@ -48,11 +48,13 @@ class Inventory extends React.Component {
     }
 
     authenticate = (provider) => {
-        const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-        firebaseApp
-            .auth()
-            .signInWithPopup(authProvider)
-            .then(this.authHandler);
+        if(provider !== "test") {
+            const authProvider = new firebase.auth[`${provider}AuthProvider`]();
+            firebaseApp
+                .auth()
+                .signInWithPopup(authProvider)
+                .then(this.authHandler);
+        }
     };
 
     logout = async () => {
@@ -63,14 +65,11 @@ class Inventory extends React.Component {
     }
 
     render() {
-
         const logout = <button onClick={this.logout}>Log Out!</button>
-
         // 1. check if they are logged in
         if (!this.state.uid) {
             return <Login authenticate={this.authenticate}/>;
         }
-
         // 2. Check if they are not the owner of the store
         if (this.state.uid !== this.state.owner) {
             return (
@@ -80,7 +79,6 @@ class Inventory extends React.Component {
                 </div>
             );
         }
-
         // 3. they must be the owner, just render the inventory
         return (
             <div className="inventory">

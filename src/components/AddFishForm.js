@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 class AddFishForm extends React.Component {
     static propTypes = {
-        addFish: PropTypes.func
+        addFish: PropTypes.func.isRequired
     };
     
     nameRef = React.createRef();
@@ -30,8 +30,8 @@ class AddFishForm extends React.Component {
     render() {
         return (
             <form className="fish-edit" onSubmit={this.createFish}>
-                <input name="name" ref={this.nameRef} type="text" placeholder="Name" />
-                <input name="price" ref={this.priceRef} type="text" placeholder="Price" />
+                <input name="name" ref={this.nameRef} type="text" placeholder="Name" required />
+                <input name="price" ref={this.priceRef} type="text" placeholder="Price" required />
                 <select name="status" ref={this.statusRef}>
                     <option value="available">Fresh!</option>
                     <option value="unavailable">Sold Out!</option>
