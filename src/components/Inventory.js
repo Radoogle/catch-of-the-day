@@ -33,7 +33,6 @@ class Inventory extends React.Component {
         // 1. Look up the current store in the firebase database
         // fetch returns a promise so we need to put await in front of it so we don't save the promise in our const store variable
         const store = await base.fetch(this.props.storeId, { context: this });
-        console.log(store);
         // 2. Claim it if there is no owner
         if (!store.owner) {
             // save it as our own
@@ -46,7 +45,6 @@ class Inventory extends React.Component {
             uid: authData.user.uid,
             owner: store.owner || authData.user.uid
         })
-        console.log(authData);
     }
 
     authenticate = (provider) => {
@@ -58,7 +56,6 @@ class Inventory extends React.Component {
     };
 
     logout = async () => {
-        console.log("logging out");
         await firebase.auth().signOut();
         this.setState({
             uid: null
