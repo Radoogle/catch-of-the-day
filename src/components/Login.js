@@ -7,7 +7,7 @@ const Login = (props) => (
         <p>Sign in to manage your store's inventory</p>
         <button className="github" onClick={() => props.authenticate('Github')}>Login with Github</button>
         <button className="facebook" onClick={() => props.authenticate('Facebook')}>Login with Facebook</button>
-        <button className="test" onClick={() => props.authenticate('test')}>Login with "test"</button>
+        <button className="anonymously" onClick={() => props.authenticate('Anonymously')}>Login anonymously</button>
     </nav>
 );
 

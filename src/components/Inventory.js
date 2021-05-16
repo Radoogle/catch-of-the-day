@@ -48,7 +48,10 @@ class Inventory extends React.Component {
     }
 
     authenticate = (provider) => {
-        if(provider !== "test") {
+        if(provider === "Anonymously") {
+            firebase.auth().signInAnonymously()
+               .then(this.authHandler);
+        } else {
             const authProvider = new firebase.auth[`${provider}AuthProvider`]();
             firebaseApp
                 .auth()
